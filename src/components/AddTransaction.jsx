@@ -1,13 +1,29 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { GlobalContext } from '../context/GlobalState';
 
 function AddTransaction() {
   const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState('');
+  const { addTransaction } = useContext(GlobalContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newTransaction = {
+      id: Date.now(),
+      description,
+      amount: parseFloat(amount),
+    };
+    addTransaction(newTransaction);
+    setDescription('');
+    setAmount('');
+    // focus description input
+    e.target[0].focus();
+  };
 
   return (
     <>
       <h3>Add New Transaction</h3>
-      <form id="form">
+      <form id="form" onSubmit={handleSubmit}>
         <div className="form-control">
           <label htmlFor="description">Description</label>
           <input
