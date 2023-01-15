@@ -27,6 +27,7 @@ export const GlobalProvider = ({ children }) => {
     });
   }
   function deleteAll() {
+    if (state.transactions.length === 0) return;
     dispatch({
       type: 'DELETE_ALL',
     });
